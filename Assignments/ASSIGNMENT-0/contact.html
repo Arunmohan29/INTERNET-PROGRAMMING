@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONTACT US</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 5px;
+            width: 70%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22512%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287 69.4a17.6 17.6 0 0 0-13-5.1H18.4c-9.8 0-18.7 5.2-23.1 13.4L28 180l114.6-62.6c-4.3-8.2-13.3-13.4-23.1-13.4H0V64H287c7.8 0 14.3 5.8 15.5 13.1l7 42c8.3 46.7-24.9 90.7-75.1 90.7-50.3 0-83.5-44.1-75.2-90.7l7.2-42C272.4 75.2 280 69.4 287 69.4z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px 10px;
+        }
+
+        .bmi-section {
+            background-color: #e91e63;
+            color: #fff;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+
+        .bmi-section input {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        button {
+            background-color: #e91e63;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button :hover {
+            background-color: #c2185b;
+        }
+
+        .dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .dialog-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .dialog-content button {
+            background-color: #e91e63;
+            color: #fff;
+            padding: 12px  20px;
+            border: none;
+            border-radius: 3px;
+            cursor : pointer;
+        }
+
+        .dialog-content button:hover {
+            background-color: #c2185b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CONTACT US</h1>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name"><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email"><br><br>
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone"><br><br>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message"></textarea><br><br>
+            <label for="bday">Birthday:</label>
+            <input type="date" id="bday" name="bday"><br><br>
+            <label for="weight">Weight (in kg):</label>
+            <input type="number" id="weight" name="weight"><br><br>
+            <label for="height">Height (in cm):</label>
+            <input type="number" id="height" name="height"><br><br>
+            <label for="budget">Budget:</label>
+            <input type="range" id="budget" name="budget" min="1000" max="10000" value="5000">
+            <output id="budget-output" for="budget">5000</output><br><br>
+            <label for="food-preference">Food Preference:</label>
+            <input type="text" id="food-preference" name="food-preference" list="food-preferences">
+            <datalist id="food-preferences">
+                <option value="Vegetarian">
+                <option value="Non-Vegetarian">
+                <option value="Vegan">
+            </datalist>
+            <button type="button" onclick="showDialog()">Show Dialog</button>
+            <div class="dialog" id="dialog">
+                <div class="dialog-content">
+                    <p id="dialog-message"></p>
+                    <ul id="food-list"></ul>
+                    <button onclick="closeDialog()">Close</button>
+                </div>
+            </div>
+            <script>
+                function showDialog() {
+                    const foodPreference = document.getElementById('food-preference').value;
+                    const dialogMessage = document.getElementById('dialog-message');
+                    const foodList = document.getElementById('food-list');
+                    foodList.innerHTML = '';
+                    if (foodPreference === 'Vegetarian') {
+                        dialogMessage.textContent = 'You have selected Vegetarian as your food preference.';
+                        const vegetarianFoods = ['Salad', 'Vegetable Soup', 'Grilled Vegetables', 'Fruit Salad'];
+                        vegetarianFoods.forEach(food => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = food;
+                            foodList.appendChild(listItem);
+                        });
+                    } else if (foodPreference === 'Non-Vegetarian') {
+                        dialogMessage.textContent = 'You have selected Non-Vegetarian as your food preference.';
+                        const nonVegetarianFoods = ['Chicken Tikka', 'Fish Fry', 'Beef Burger', 'Lamb Kebab'];
+                        nonVegetarianFoods.forEach(food => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = food;
+                            foodList.appendChild(listItem);
+                        });
+                    } else if (foodPreference === 'Vegan') {
+                        dialogMessage.textContent = 'You have selected Vegan as your food preference.';
+                        const veganFoods = ['Vegan Salad', 'Vegan Soup', 'Grilled Tofu', 'Fruit Smoothie'];
+                        veganFoods.forEach(food => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = food;
+                            foodList.appendChild(listItem);
+                        });
+                    }
+                    const dialog = document.getElementById('dialog');
+                    dialog.style.display = 'block';
+                }
+
+                function closeDialog() {
+                    const dialog = document.getElementById('dialog');
+                    dialog.style.display = 'none';
+                }
+            </script>
+        </form>
+        <div class="bmi-section">
+            <h2>BMI Calculator</h2>
+            <form>
+                <label for="weight">Weight (in kg):</label>
+                <input type="number" id="weight" name="weight"><br><br>
+                <label for="height">Height (in meters):</label>
+                <input type="number" id="height" name="height"><br><br>
+                <input type="submit" value="Calculate BMI">
+                <output id="bmi-output"></output>
+                <script>
+                    const weightInput = document.getElementById('weight');
+                    const heightInput = document.getElementById('height');
+                    const bmiOutput = document.getElementById('bmi-output');
+                    const form = document.querySelector('form');
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        const weight = parseFloat(weightInput.value);
+                        const height = parseFloat(heightInput.value);
+                        const bmi = weight / (height * height);
+                        bmiOutput.textContent = `Your BMI is: ${bmi.toFixed(2)}`;
+                    });
+                </script>
+            </form>
+        </div>
+        <script>
+            const budgetInput = document.getElementById('budget');
+            const budgetOutput = document.getElementById('budget-output');
+            budgetInput.addEventListener('input', () => {
+                budgetOutput.textContent = budgetInput.value;
+            });
+        </script>
+    </div>
+</body>
+</html>
